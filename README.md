@@ -5,3 +5,6 @@ I literally misunderstood the point of this task by accident, sorry teach. I was
 i was able to create 2 api get requests! one returns a list of the amiibos, but it is currently cutting it off after so long. Not yet sure how to adjust for that?
 the 2nd get request i used included input from the reader to do a web api get request that requires a name of an amiibo to pull that amiibo from the api.
 some issues i encountered with the 2nd request was that i forgot i needed to include the "?name=" in the api get request, once i figured that out, i was able to get it working easily
+
+
+used https://www.youtube.com/watch?v=SUtXrn1s8OQ to help create my get requests in their own class. This is from quite a while ago so not everything matched up and i had to do some trial and error with this.

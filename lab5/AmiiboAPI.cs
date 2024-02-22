@@ -24,6 +24,11 @@ namespace lab5
             return resp;
         }
 
-        public async Task<HttpResponseMessage> GetAmiibo
+        public async Task<HttpResponseMessage> GetAmiiboInfoBasedOnName(string name, string value)
+        {
+            HttpResponseMessage resp = await httpClient.GetAsync($"https://www.amiiboapi.com/api/amiibo/?{name}={value}");
+
+            return resp;
+        }
     }
 }

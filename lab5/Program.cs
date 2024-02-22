@@ -26,7 +26,7 @@ while (!getOut)
         case "2":
             Console.WriteLine("what amiibo do you want to see?");
             string value = Console.ReadLine().ToLower();
-            HttpResponseMessage responseWithName = await api.GetAmiiboInfoBasedOnName("name", value);
+            HttpResponseMessage responseWithName = await api.GetAmiiboInfoBasedOnName(value);
             var amiibo = await responseWithName.Content.ReadAsStringAsync();
             Console.WriteLine(amiibo);
             break;

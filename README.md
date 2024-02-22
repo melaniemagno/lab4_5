@@ -8,3 +8,12 @@ some issues i encountered with the 2nd request was that i forgot i needed to inc
 
 
 used https://www.youtube.com/watch?v=SUtXrn1s8OQ to help create my get requests in their own class. This is from quite a while ago so not everything matched up and i had to do some trial and error with this.
+
+
+Error seen after:
+System.Collections.Generic.KeyNotFoundException: 'The given key was not present in the dictionary.'
+
+
+
+
+

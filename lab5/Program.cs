@@ -11,7 +11,7 @@ bool getOut = false;
 
 while (!getOut)
 {
-    Console.WriteLine("do you want to: \n\t1. print a list of the amiibos \n\t2. print a single amiibo based on its' name?\n\t3. Exit");
+    Console.WriteLine("do you want to: \n\t1. print a list of the amiibos \n\t2. print a single amiibo based on its name?\n\t3. Exit");
     string answer = Console.ReadLine();
     switch (answer)
     {
@@ -32,6 +32,13 @@ while (!getOut)
             break;
         case "3":
             getOut=true;
+            break;
+        case "4":
+            Console.WriteLine("what amiibo do you want to see?");
+            string value2 = Console.ReadLine().ToLower();
+            Amiibo responseWithName2 = await api.GetAmiiboInfoBasedName(value2);
+            
+            Console.WriteLine(responseWithName2.ToString());
             break;
         default:
             Console.WriteLine("try again");

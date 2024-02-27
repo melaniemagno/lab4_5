@@ -16,30 +16,47 @@ namespace lab5
         /// <summary>
         /// gets the response from the public api
         /// </summary>
-        /// <returns>HttpResponseMessage</returns>
+        /// <returns>amiibo array</returns>
         public async Task<Amiibo[]> GetAmiiboNames()
         {
+            //this is the http response message
             HttpResponseMessage resp = await httpClient.GetAsync("https://www.amiiboapi.com/api/amiibo/");
-            Amiibo[] amis = null;;
 
+            //create an empty array just in case things go sour
+            Amiibo[] array = null;
+
+            //if the http responsemessage is successful in getting through to online api
             if (resp.IsSuccessStatusCode)
             {
-                var values = await resp.Content.ReadFromJsonAsync<AmiiboArray>();
-                amis = values.Amiibo;
+                //using var just in case, returns an array of values
+                AmiiboArray amiibos = await resp.Content.ReadFromJsonAsync<AmiiboArray>();
+                //fill in previously defined array with the amiibos read from the Json list.
+                //should automatically create the values of name and image based on the json file
+                array = amiibos.Amiibo;
             }
-            return amis;
+            return array;
         }
+
         /// <summary>
-        /// another get request for the amiibo api
+        /// another get request for the amiibo api that returns a list of amiibos based on the name given by the user
         /// </summary>
         /// <param name="value">this is the name of the amiibo the user wants to see</param>
-        /// <returns>HttpResponseMessage</returns>
-        public async Task<HttpResponseMessage> GetAmiiboInfoBasedOnName(string value)
+        /// <returns>Amiibo[]</returns>
+        public async Task<Amiibo[]> GetAmiiboInfoBasedOnName(string value)
         {
             HttpResponseMessage resp = await httpClient.GetAsync($"https://www.amiiboapi.com/api/amiibo/?name={value}");
-            //checking to see what the message is
-            Console.WriteLine(resp.ToString());
-            return resp;
+            Amiibo[] array = null;
+
+            //if the http responsemessage is successful in getting through to online api
+            if (resp.IsSuccessStatusCode)
+            {
+                //using var just in case, returns an array of values
+                AmiiboArray amiibos = await resp.Content.ReadFromJsonAsync<AmiiboArray>();
+                //fill in previously defined array with the amiibos read from the Json list.
+                //should automatically create the values of name and image based on the json file
+                array = amiibos.Amiibo;
+            }
+            return array;
         }
         public async Task<Amiibo[]> GetAmiiboInfoBasedOnID(string value)
         {

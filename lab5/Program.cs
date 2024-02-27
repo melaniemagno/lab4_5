@@ -17,7 +17,7 @@ while (!getOut)
     {
         //if user wants to print list of amiibos
         case "1":
-            var response = await api.GetAmiiboNames();
+            Amiibo[] response = await api.GetAmiiboNames();
 
             //should use if(response?.IsSuccessStatusCode) in case the request isnt successful
             Console.WriteLine(response);
@@ -31,9 +31,9 @@ while (!getOut)
         case "2":
             Console.WriteLine("what amiibo do you want to see?");
             string value = Console.ReadLine().ToLower();
-            HttpResponseMessage responseWithName = await api.GetAmiiboInfoBasedOnName(value);
-            var amiibo = await responseWithName.Content.ReadAsStringAsync();
-            Console.WriteLine(amiibo);
+            Amiibo[] array = await api.GetAmiiboInfoBasedOnName(value);
+
+            AmiiboAPI.PrintAmiibo(array);
             break;
         case "3":
             getOut=true;

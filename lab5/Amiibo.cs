@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace lab5
 {
+    /// <summary>
+    /// implements icomparable to be able to use sort methods
+    /// </summary>
     public class Amiibo : IComparable<Amiibo>
     {
         /// <summary>

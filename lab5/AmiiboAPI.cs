@@ -44,6 +44,7 @@ namespace lab5
         /// <returns>Amiibo[]</returns>
         public async Task<Amiibo[]> GetAmiiboInfoBasedOnName(string value)
         {
+            //pretty much the same as GetAmiiboNames method above
             HttpResponseMessage resp = await httpClient.GetAsync($"https://www.amiiboapi.com/api/amiibo/?name={value}");
             Amiibo[] array = null;
 
@@ -58,22 +59,22 @@ namespace lab5
             }
             return array;
         }
+
+        //needs work
         public async Task<Amiibo[]> GetAmiiboInfoBasedOnID(string value)
         {
             Amiibo[] amis = null;
             HttpResponseMessage resp = await httpClient.GetAsync($"https://www.amiiboapi.com/api/amiibo/?id={value}");
-            //var parsedInfo = JsonSerializer.Deserialize<Amiibo>(resp.ToString());
             if(resp.IsSuccessStatusCode)
             {
                 var values = await resp.Content.ReadFromJsonAsync<AmiiboArray>();
                 amis = values.Amiibo;
             }
             return amis;
-            //var name = parsedInfo.name;
-            //var image = parsedInfo.image;
-            //return new Amiibo
-            //{ name = name, image = image };
+
         }
+
+        //needs work
         public async Task<Amiibo> GetAmiiboInfoBasedName(string value)
         {
             Amiibo ami = null;
@@ -99,6 +100,7 @@ namespace lab5
             list.Sort();
             foreach (Amiibo amiibo in list)
             {
+                //would like to work on this to make it look neater
                 Console.WriteLine($"\t" + amiibo.amiiboSeries + "--------" + amiibo.name );
             }
         }

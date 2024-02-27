@@ -74,13 +74,6 @@ namespace lab5
             //return new Amiibo
             //{ name = name, image = image };
         }
-        public static void PrintAmiibo(Amiibo[] ami)
-        {
-            foreach (Amiibo amiibo in ami)
-            {
-                Console.WriteLine($"\tName = {amiibo.name}");
-            }
-        }
         public async Task<Amiibo> GetAmiiboInfoBasedName(string value)
         {
             Amiibo ami = null;
@@ -90,6 +83,24 @@ namespace lab5
                 ami = await resp.Content.ReadFromJsonAsync<Amiibo>();
             }
             return ami;
+        }
+
+        /// <summary>
+        /// prints out a list of names of amiibos
+        /// </summary>
+        /// <param name="ami">an array of amiibos</param>
+        public static void PrintAmiibo(Amiibo[] ami)
+        {
+            List<Amiibo> list = new List<Amiibo>();
+            foreach (Amiibo amiibo in ami)
+            {
+                list.Add(amiibo);
+            }
+            list.Sort();
+            foreach (Amiibo amiibo in list)
+            {
+                Console.WriteLine($"\t" + amiibo.amiiboSeries + "--------" + amiibo.name );
+            }
         }
     }
 }

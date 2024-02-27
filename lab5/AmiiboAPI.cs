@@ -17,13 +17,18 @@ namespace lab5
         /// gets the response from the public api
         /// </summary>
         /// <returns>HttpResponseMessage</returns>
-        public async Task<HttpResponseMessage> GetAmiiboNames()
+        public async Task<Amiibo[]> GetAmiiboNames()
         {
             HttpResponseMessage resp = await httpClient.GetAsync("https://www.amiiboapi.com/api/amiibo/");
+            Amiibo[] amis = null;;
 
-            return resp;
+            if (resp.IsSuccessStatusCode)
+            {
+                var values = await resp.Content.ReadFromJsonAsync<AmiiboArray>();
+                amis = values.Amiibo;
+            }
+            return amis;
         }
-
         /// <summary>
         /// another get request for the amiibo api
         /// </summary>
@@ -36,21 +41,38 @@ namespace lab5
             Console.WriteLine(resp.ToString());
             return resp;
         }
-
+        public async Task<Amiibo[]> GetAmiiboInfoBasedOnID(string value)
+        {
+            Amiibo[] amis = null;
+            HttpResponseMessage resp = await httpClient.GetAsync($"https://www.amiiboapi.com/api/amiibo/?id={value}");
+            //var parsedInfo = JsonSerializer.Deserialize<Amiibo>(resp.ToString());
+            if(resp.IsSuccessStatusCode)
+            {
+                var values = await resp.Content.ReadFromJsonAsync<AmiiboArray>();
+                amis = values.Amiibo;
+            }
+            return amis;
+            //var name = parsedInfo.name;
+            //var image = parsedInfo.image;
+            //return new Amiibo
+            //{ name = name, image = image };
+        }
+        public static void PrintAmiibo(Amiibo[] ami)
+        {
+            foreach (Amiibo amiibo in ami)
+            {
+                Console.WriteLine($"\tName = {amiibo.name}");
+            }
+        }
         public async Task<Amiibo> GetAmiiboInfoBasedName(string value)
         {
-            var resp = await httpClient.GetFromJsonAsync<JsonElement>($"https://www.amiiboapi.com/api/amiibo/?name={value}");
-
-            var array = resp.GetProperty("amiibo");
-            var firstItem = array[0];
-            var name = firstItem.GetProperty("name").GetString();
-            var image = firstItem.GetProperty("image").GetString();
-
-            return new Amiibo
+            Amiibo ami = null;
+            HttpResponseMessage resp = await httpClient.GetAsync($"https://www.amiiboapi.com/api/amiibo/?name={value}");
+            if (resp.IsSuccessStatusCode)
             {
-                name = name,
-                image = image
-            };
+                ami = await resp.Content.ReadFromJsonAsync<Amiibo>();
+            }
+            return ami;
         }
     }
 }

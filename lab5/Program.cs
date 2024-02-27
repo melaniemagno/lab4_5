@@ -6,7 +6,9 @@
 ///
 using lab5;
 
+//have to create a new instance of an api
 AmiiboAPI api = new AmiiboAPI();
+//setting a bool here to be able to switch out of the switch statement below easily
 bool getOut = false;
 
 while (!getOut)
@@ -18,20 +20,20 @@ while (!getOut)
         //if user wants to print list of amiibos
         case "1":
             Amiibo[] response = await api.GetAmiiboNames();
-
-            //should use if(response?.IsSuccessStatusCode) in case the request isnt successful
-            Console.WriteLine(response);
             AmiiboAPI.PrintAmiibo(response);
             break;
-        case "2":
+        //prints list of amiibos based on name given by user
+        case "2": 
             Console.WriteLine("what amiibo do you want to see?");
             string value = Console.ReadLine().ToLower();
             Amiibo[] array = await api.GetAmiiboInfoBasedOnName(value);
             AmiiboAPI.PrintAmiibo(array);
             break;
+        //exits the loop
         case "3":
             getOut=true;
             break;
+        //another name based amiibo response/not working just yet
         case "4":
             Console.WriteLine("what amiibo do you want to see?");
             string value2 = Console.ReadLine().ToLower();
@@ -39,15 +41,11 @@ while (!getOut)
             
             Console.WriteLine(responseWithName2);
             break;
+        //finds amiibo based on id value/also not working just yet
         case "5":
             Console.WriteLine("What ID do you want to look up?");
             string id = Console.ReadLine();
-
             var ami = await api.GetAmiiboInfoBasedOnID(id);
-            if(ami != null)
-            { foreach(var item in ami)
-                { Console.WriteLine(item.name); } 
-            }
             AmiiboAPI.PrintAmiibo(ami);
             break;
         default:
